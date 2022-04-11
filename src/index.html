@@ -169,8 +169,8 @@
             <div class="container" id="contributor-container">
                 <div class="my-3 mt-5">
                     <h2><strong>Contributor</strong></h2>
-                    <p>Last Updated by: Last Name, First Name</p>
-                    <p>Last Updated at: Month Day, Year</p>
+                    <p>Last Updated by: Rodriguez, Bianca</p>
+                    <p>Last Updated at: April 11, 2022</p>
                 </div>
             </div>
         </div>
@@ -199,16 +199,126 @@
         const defaultZoomLevel = 6; 
 
         // a. GeoServer using LeafletJS
-
+        var barangayData = $.ajax({
+            url: sampleUrl,
+            dataType: "json",
+            success: console.log("Barangay data successfully loaded."),
+            error: function(xhr) {
+                alert(xhr.statusText)
+            }
+        })
+        $.when(barangayData).done(function() {
+            var leafletMap = L.map('map-1').setView([11.042919, 122.41748], 9);
+            L.tileLayer(`${voyagerBase}`, tileOptions).addTo(leafletMap);
+            // Add requested external GeoJSON to map
+            L.geoJSON(barangayData.responseJSON).addTo(leafletMap);
+            leafletMap.addControl(new L.Control.Fullscreen());
+        });
 
         // b. OpenLayers using LeafletJS
- 
+        var attribution = new ol.control.Attribution({
+            collapsible: false
+        });
+
+        const views = new ol.View({
+            rotation: - Math.PI,
+            center: ol.proj.fromLonLat([4.35247, 50.84673]),
+            maxZoom: 18,
+            zoom: 8
+        })
+
+        var map = new ol.Map({
+            controls: ol.control.defaults({attribution: false}).extend([attribution]),
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM({
+                        url: 'https://tile.openstreetmap.be/osmbe/{z}/{x}/{y}.png',
+                        attributions: [ ol.source.OSM.ATTRIBUTION, 'Tiles courtesy of <a href="https://geo6.be/">GEO-6</a>' ],
+                        maxZoom: 10
+                    })
+                })
+            ],
+            target: 'map-2',
+            view: views
+        });
+
+        // An elastic easing method (from https://github.com/DmitryBaranovskiy/raphael).
+        function elastic(t) {
+            return (Math.pow(2, -10 * t) * Math.sin(((t - 0.075) * (2 * Math.PI)) / 0.3) + 1);
+        }
+        function onClick(id, callback) {
+            document.getElementById(id).addEventListener('click', callback);
+        }
+        onClick('rotate-left', function () {
+            views.animate({rotation: views.getRotation() + Math.PI / 2,});
+        });
+        onClick('rotate-right', function () {
+            views.animate({rotation: views.getRotation() - Math.PI / 2,});
+        });
+
+
 
         // c. MAPBOXGL
+        L.mapbox.accessToken = 'pk.eyJ1IjoiY2Fub25taW5kcyIsImEiOiJjazZ6MDhsbm8wd2l5M2VydnlhNnMzNjd2In0.fHuV1kBL3phDqN7ME7fyFg';
+        var mapBoxGLMap = L.map('map-3').setView(
+            localPHCoordinates, defaultZoomLevel
+        ).addLayer(
+            L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11')
+        );
+        var featureLayer = L.mapbox.featureLayer()
+        .loadURL('https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson')
+        .addTo(mapBoxGLMap);
 
-        
         // d. DECKGL
-        
+        // source: Natural Earth http://www.naturalearthdata.com/ via geojson.xyz
+        const AIR_PORTS =
+        'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson';
+
+        const deckGLmap = L.map(document.getElementById('map-4'), {
+            center: [51.47, 0.45],
+            zoom: 4,
+            minZoom: 2,
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(deckGLmap);
+
+        const deckLayer = new DeckGlLeaflet.LeafletLayer({
+            views: [
+                new deck.MapView({
+                repeat: true
+                })
+            ],
+            layers: [
+                new deck.GeoJsonLayer({
+                id: 'airports',
+                data: AIR_PORTS,
+                // Styles
+                filled: true,
+                pointRadiusMinPixels: 2,
+                pointRadiusScale: 2000,
+                getPointRadius: f => 11 - f.properties.scalerank,
+                getFillColor: [200, 0, 80, 180]
+                }),
+                new deck.ArcLayer({
+                id: 'arcs',
+                data: AIR_PORTS,
+                dataTransform: d => d.features.filter(f => f.properties.scalerank < 4),
+                // Styles
+                getSourcePosition: f => [-0.4531566, 51.4709959], // London
+                getTargetPosition: f => f.geometry.coordinates,
+                getSourceColor: [0, 128, 200],
+                getTargetColor: [200, 0, 80],
+                getWidth: 1
+            })
+            ],
+        });
+        deckGLmap.addLayer(deckLayer);
+        const featureGroup = L.featureGroup();
+        featureGroup.addLayer(L.marker([51.4709959, -0.4531566]));
+        featureGroup.bindPopup("<b>Hello Statistics!</b><br>I am a popup in London!").openPopup();
+        deckGLmap.addLayer(featureGroup);
+
     </script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
