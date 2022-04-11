@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<title>Web Maps Diversity</title>
+    
+    <!-- Bootstrap4 -->
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- LeafletJS CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+    <!-- CSS Links -->
+        <link rel="stylesheet" href="main-style.css">
+        <!-- <link rel="stylesheet" href="navbar-style.css"> -->
+    <!-- LeafletJS JS -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin="">
+        </script>
+    <!-- Leaflet fullscreen plugin -->
+    	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+	    <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'/>
+    <!-- Open Layers -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.css" integrity="sha512-D2c/nmSVlwoZk29SLwJK8GkLyCyPuNbZ/vZQL/lNzw+o+yXzsbnJt7lK/iCfdBmgyLRDi0qx27gpE8Zb1C6I7g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.6.5/ol.js" integrity="sha512-O7kHS9ooekX8EveiC94z9xSvD/4xt10Qigl6uEKvspYykdux3Ci5QNu5fwi4ca0ZkZI/oCgx5ja8RklWUEqzxQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- MapBox -->
+        <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+    <!-- deck.gl standalone bundle -->
+        <script src="https://unpkg.com/deck.gl@^8.7.0-beta.6/dist.min.js"></script>
+    <!-- deck.gl-leaflet -->
+        <script src="https://unpkg.com/deck.gl-leaflet@1.1.1/dist/deck.gl-leaflet.min.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Web Maps Diversity</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#about-container" aria-expanded="true">
+                        <i class="fas fa-bookmark w-25"></i>
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="#leafletjs-container">
+                        <i class="fa fa-globe w-25" aria-hidden="true"></i>
+                        LeafletJS
+                    </a>
+                </li>
+                <li>
+                    <a href="#openlayers-container">
+                        <i class="fa fa-globe w-25" aria-hidden="true"></i>
+                        Open Layers
+                    </a>
+                </li>
+                <li>
+                    <a href="#mapboxgl-container">
+                        <i class="fa fa-globe w-25" aria-hidden="true"></i>
+                        MapBox GL
+                    </a>
+                </li>
+                <li>
+                    <a href="#deckgl-container">
+                        <i class="fa fa-globe w-25" aria-hidden="true"></i>
+                        Deck GL
+                    </a>
+                </li>
+                <li>
+                    <a href="#contributor-container">
+                        <i class="fas fa-paper-plane w-25"></i>
+                        Contributor
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="container" id="about-container">
+                <div class="my-3 mt-5">
+                    <h2><strong>About</strong></h2>
+                    <p>Interactive Web Maps using LeafletJS, OpenLayers, MapBoxGL and DeckGL.</p>
+                </div>
+            </div>
+
+            <div class="container" id="leafletjs-container">
+                <div class="my-3 mt-5">
+                    <h2><strong>LeafletJS</strong></h2>
+                    <p>Leaflet. js is an open source javascript library that helps users create interactive maps. <br />
+                    There are a number of plugins that extend the interactivity and functionality of your maps.</p>
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                    <a target="_blank" href="https://leafletjs.com/" class="link-primary">Reference Link</a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div id="map-1"></div>
+                </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="container" id="openlayers-container">
+                <div class="my-3 mt-5">
+                    <h2><strong>Open Layers</strong></h2>
+                    <p>OpenLayers makes it easy to put a dynamic map in any web page. It can display map tiles, vector data and markers loaded from any source. OpenLayers has been developed to further the use of geographic information of all kinds. It is completely free.</p>
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                    <a target="_blank" href="https://openlayers.org/" class="link-primary">Reference Link</a>
+                    <br/>
+                    <div class="mt-3">
+                        <button id="rotate-left" class="btn btn-dark">Rotate clockwise ↻</button>
+                        <button id="rotate-right" class="btn btn-dark">Rotate counterclockwise ↺</button>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div id="map-2"></div>
+                </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="container" id="mapboxgl-container">
+                <div class="my-3 mt-5">
+                    <h2><strong>MapBox GL</strong></h2>
+                    <p>Mapbox GL JS is a client-side JavaScript library for building web maps and web applications with Mapbox's modern mapping technology. You can use Mapbox GL JS to display Mapbox maps in a web browser or client, add user interactivity, and customize the map experience in your application.</p>
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                    <a target="_blank" href="https://docs.mapbox.com/mapbox-gl-js/api/" class="link-primary">Reference Link</a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div id="map-3"></div>
+                </div>
+            </div>
+            <div class="line"></div>
+
+            <div class="container" id="deckgl-container">
+                <div class="my-3 mt-5">
+                    <h2><strong>Deck GL</strong></h2>
+                    <p>deck.gl is a WebGL-powered framework for visual exploratory data analysis of large datasets.</p>
+                    <i class="fa fa-link" aria-hidden="true"></i>
+                    <a target="_blank" href="https://deck.gl/" class="link-primary"><i>Reference Link</i></a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div id="map-4"></div>
+                </div>
+            </div>
+
+            <div class="container" id="contributor-container">
+                <div class="my-3 mt-5">
+                    <h2><strong>Contributor</strong></h2>
+                    <p>Last Updated by: Last Name, First Name</p>
+                    <p>Last Updated at: Month Day, Year</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Leaflet JS -->
+    <script>
+        const voyagerBase = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+        const tileOptions = {
+            attribution:
+                'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            minZoom: 2,
+			fullscreenControl: {
+                pseudoFullscreen: true
+			},
+            }
+
+        // Endpoint
+        const sampleUrl = "http://lungsod.tcagp.upd.edu.ph/api/api/geoserver/barangays"
+        // Adjusted Philippines Coordinates
+        const localPHCoordinates = [12.042919, 121.91748];   
+        const defaultZoomLevel = 6; 
+
+        // a. GeoServer using LeafletJS
+
+
+        // b. OpenLayers using LeafletJS
+ 
+
+        // c. MAPBOXGL
+
+        
+        // d. DECKGL
+        
+    </script>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Sidebar -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+    <!-- DeckGL  -->
+    <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
+    <!-- optional if mapbox base map is needed -->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+</body>
+</html>
